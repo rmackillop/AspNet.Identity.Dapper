@@ -95,8 +95,21 @@ namespace AspNet.Identity.Dapper
         /// <returns></returns>
         public List<UserLoginInfo> FindByUserId(int memberId)
         {
-            return db.Connection.Query<UserLoginInfo>("Select * from MemberLogin where MemberId = @memberId", new {memberId=memberId })
-                .ToList();
+            try
+            {
+                return db.Connection.Query<UserLoginInfo>("Select * from MemberLogin where MemberId = @memberId", new { memberId = memberId }).ToList();
+            }
+            catch (InvalidOperationException ex)
+            {
+                if (ex.Message.Contains("parameterless"))
+                    return new List<UserLoginInfo>();
+                else
+                    throw;
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }
