@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
 using Dapper;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System;
 
 namespace AspNet.Identity.Dapper
 {
@@ -35,11 +35,11 @@ namespace AspNet.Identity.Dapper
                     where UserId = @userId 
                     and LoginProvider = @loginProvider 
                     and ProviderKey = @providerKey",
-                new 
-                {   
-                    userId=member.Id,
-                    loginProvider=login.LoginProvider,
-                    providerKey=login.ProviderKey
+                new
+                {
+                    userId = member.Id,
+                    loginProvider = login.LoginProvider,
+                    providerKey = login.ProviderKey
                 });
         }
 
@@ -64,12 +64,12 @@ namespace AspNet.Identity.Dapper
         {
             db.Connection.Execute(@"Insert into MemberLogin 
                 (LoginProvider, ProviderKey, UserId) 
-                values (@loginProvider, @providerKey, @userId)", 
+                values (@loginProvider, @providerKey, @userId)",
                     new
                     {
-                        loginProvider=login.LoginProvider,
-                        providerKey=login.ProviderKey,
-                        userId=member.Id
+                        loginProvider = login.LoginProvider,
+                        providerKey = login.ProviderKey,
+                        userId = member.Id
                     });
         }
 
@@ -82,10 +82,10 @@ namespace AspNet.Identity.Dapper
         {
             return db.Connection.ExecuteScalar<int>(@"Select UserId from MemberLogin 
                 where LoginProvider = @loginProvider and ProviderKey = @providerKey",
-                        new 
-                        {   
+                        new
+                        {
                             loginProvider = MemberLogin.LoginProvider,
-                            providerKey=MemberLogin.ProviderKey
+                            providerKey = MemberLogin.ProviderKey
                         });
         }
 
